@@ -141,16 +141,16 @@ export default function Hero() {
                         {/* Glowing Syntax Mockup */}
                         <div className="font-mono text-sm leading-relaxed text-gray-300">
                             <p><span className="text-brandPink">const</span> <span className="text-brandIndigo">developer</span> = {'{'}</p>
-                            <p className="ml-4">name: <span className="text-emerald-400">"M Hassan Asghar"</span>,</p>
+                            <p className="ml-4">name: <span className="text-emerald-400">&quot;M Hassan Asghar&quot;</span>,</p>
                             <p className="ml-4">experience: <span className="text-amber-400">1 year</span>,</p>
-                            <p className="ml-4">focus: <span className="text-emerald-400">"Full Stack Web App"</span>,</p>
+                            <p className="ml-4">focus: <span className="text-emerald-400">&quot;Full Stack Web App&quot;</span>,</p>
                             <p className="ml-4">skills: [</p>
-                            <p className="ml-8"><span className="text-emerald-400">"React.js"</span>, <span className="text-emerald-400">"Next.js"</span>,</p>
-                            <p className="ml-8"><span className="text-emerald-400">"Node.js"</span>, <span className="text-emerald-400">"MongoDB"</span>,</p>
-                            <p className="ml-8"><span className="text-emerald-400">"TailwindCSS"</span></p>
+                            <p className="ml-8"><span className="text-emerald-400">&quot;React.js&quot;</span>, <span className="text-emerald-400">&quot;Next.js&quot;</span>,</p>
+                            <p className="ml-8"><span className="text-emerald-400">&quot;Node.js&quot;</span>, <span className="text-emerald-400">&quot;MongoDB&quot;</span>,</p>
+                            <p className="ml-8"><span className="text-emerald-400">&quot;TailwindCSS&quot;</span></p>
                             <p className="ml-4">],</p>
                             <p className="ml-4">passion: () <span className="text-brandPink">=&gt;</span> {'{'}</p>
-                            <p className="ml-8 text-gray-400 italic">// Building things that matter</p>
+                            <p className="ml-8 text-gray-400 italic">{"// Building things that matter"}</p>
                             <p className="ml-8">return <span className="text-brandIndigo">true</span>;</p>
                             <p className="ml-4">{'}'}</p>
                             <p>{'};'}</p>
