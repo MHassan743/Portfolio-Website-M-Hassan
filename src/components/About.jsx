@@ -6,7 +6,7 @@ import { BadgeCheck, Calendar, Cpu, Layers } from "lucide-react";
 export default function About() {
     const stats = [
         {
-            value: "5+",
+            value: "6+",
             label: "Live Projects",
             icon: <Layers className="text-brandIndigo" size={24} />,
             desc: "Deployed & functional on Vercel"
