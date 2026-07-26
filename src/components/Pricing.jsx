@@ -39,8 +39,8 @@ const packages = [
             "bg-gradient-to-r from-brandIndigo to-brandPink text-white shadow-glowIndigo hover:shadow-glowPink",
         services: [
             { name: "E-commerce Store", price: "$400 – $800" },
-            { name: "Business Website", price: "$150 – $300" },
-            { name: "Website Maintenance", price: "$50 – $100/mo" },
+            { name: "Business Website", price: "$200 – $380" },
+            { name: "Website Maintenance", price: "$80 – $150/mo" },
         ],
         features: [
             "Everything in Basic",
@@ -63,9 +63,9 @@ const packages = [
             "border border-violet-500/60 text-violet-300 hover:bg-violet-500 hover:text-white hover:border-violet-500",
         services: [
             { name: "Web App (Custom)", price: "$500 – $1,500" },
-            { name: "E-commerce Store", price: "$400 – $800" },
+            { name: "E-commerce Store", price: "$440 – $850" },
             { name: "API Integration", price: "Custom Quote" },
-            { name: "Website Maintenance", price: "$50 – $100/mo" },
+            { name: "Website Maintenance", price: "$100 – $250/mo" },
         ],
         features: [
             "Everything in Standard",
@@ -73,7 +73,7 @@ const packages = [
             "REST / GraphQL API",
             "Auth & role management",
             "Real-time features",
-            "Unlimited revisions",
+            "5 revisions",
             "Priority support",
         ],
         cta: "Custom Web App",
