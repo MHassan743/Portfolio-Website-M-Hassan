@@ -338,200 +338,202 @@ export default function Certificates() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsAddModalOpen(false)}
-                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
+                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md"
                     >
                         <motion.div
                             initial={{ scale: 0.95, y: 20, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
                             exit={{ scale: 0.95, y: 20, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative max-w-xl w-full my-8 glass-panel rounded-3xl border border-gray-800 bg-[#0c111c] p-6 sm:p-8 shadow-2xl"
+                            className="relative max-w-xl w-full max-h-[90vh] flex flex-col glass-panel rounded-3xl border border-gray-800 bg-[#0c111c] shadow-2xl overflow-hidden"
                         >
-                            {/* Close Button */}
-                            <button
-                                onClick={() => setIsAddModalOpen(false)}
-                                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                            >
-                                <X size={20} />
-                            </button>
-
-                            {/* Header */}
-                            <div className="space-y-1 mb-6">
-                                <div className="inline-flex items-center gap-2 text-xs font-bold text-brandPink uppercase tracking-wider">
-                                    <Plus size={14} />
-                                    <span>New Credential</span>
+                            {/* Sticky Modal Header */}
+                            <div className="p-6 sm:px-8 sm:pt-7 sm:pb-5 border-b border-gray-800/80 bg-[#0c111c] shrink-0 relative">
+                                <button
+                                    onClick={() => setIsAddModalOpen(false)}
+                                    className="absolute top-6 right-6 p-2 rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer z-10"
+                                >
+                                    <X size={20} />
+                                </button>
+                                <div className="space-y-1 pr-8">
+                                    <div className="inline-flex items-center gap-2 text-xs font-bold text-brandPink uppercase tracking-wider">
+                                        <Plus size={14} />
+                                        <span>New Credential</span>
+                                    </div>
+                                    <h3 className="text-2xl font-display font-bold text-white">Add New Certificate</h3>
+                                    <p className="text-xs text-gray-400">Fill in details to display a new certificate on your portfolio.</p>
                                 </div>
-                                <h3 className="text-2xl font-display font-bold text-white">Add New Certificate</h3>
-                                <p className="text-xs text-gray-400">Fill in details to display a new certificate on your portfolio.</p>
                             </div>
 
-                            {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {/* Title */}
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-300 mb-1">
-                                        Certificate Title *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="e.g. AWS Certified Solutions Architect"
-                                        value={formData.title}
-                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
-                                        required
-                                    />
-                                </div>
-
-                                {/* Issuer & Date Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* Scrollable Form Body */}
+                            <div className="flex-1 overflow-y-auto p-6 sm:p-8 custom-scrollbar">
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    {/* Title */}
                                     <div>
                                         <label className="block text-xs font-bold text-gray-300 mb-1">
-                                            Issuer / Organization *
+                                            Certificate Title *
                                         </label>
                                         <input
                                             type="text"
-                                            placeholder="e.g. Coursera, IBM, UOL"
-                                            value={formData.issuer}
-                                            onChange={(e) => setFormData({ ...formData, issuer: e.target.value })}
+                                            placeholder="e.g. AWS Certified Solutions Architect"
+                                            value={formData.title}
+                                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
                                             required
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-300 mb-1">
-                                            Issue Date / Period
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="e.g. August 2026"
-                                            value={formData.date}
-                                            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
-                                        />
-                                    </div>
-                                </div>
 
-                                {/* Category & Badge */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-300 mb-1">
-                                            Category
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="e.g. Web Dev, AI, Cloud"
-                                            value={formData.category}
-                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-300 mb-1">
-                                            Badge Text
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="e.g. Verified, Top Scorer"
-                                            value={formData.badge}
-                                            onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Description */}
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-300 mb-1">
-                                        Description / Highlights
-                                    </label>
-                                    <textarea
-                                        rows={2}
-                                        placeholder="Brief description of skills or topics covered in this certificate..."
-                                        value={formData.desc}
-                                        onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors resize-none"
-                                    />
-                                </div>
-
-                                {/* Image Upload / URL Selector */}
-                                <div className="space-y-2 pt-2 border-t border-gray-800">
-                                    <div className="flex items-center justify-between">
-                                        <label className="text-xs font-bold text-gray-300">
-                                            Certificate Image *
-                                        </label>
-                                        <div className="flex bg-white/5 p-1 rounded-lg border border-gray-800">
-                                            <button
-                                                type="button"
-                                                onClick={() => setUploadType("file")}
-                                                className={`px-3 py-1 rounded-md text-[11px] font-bold transition-colors ${uploadType === "file" ? "bg-brandIndigo text-white" : "text-gray-400 hover:text-white"}`}
-                                            >
-                                                Upload File
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => setUploadType("url")}
-                                                className={`px-3 py-1 rounded-md text-[11px] font-bold transition-colors ${uploadType === "url" ? "bg-brandIndigo text-white" : "text-gray-400 hover:text-white"}`}
-                                            >
-                                                Image URL
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {uploadType === "file" ? (
-                                        <label className="border-2 border-dashed border-gray-700 hover:border-brandIndigo rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-white/5 hover:bg-white/10 transition-all text-center group">
-                                            <Upload size={28} className="text-gray-400 group-hover:text-brandIndigo group-hover:scale-110 transition-all mb-2" />
-                                            <span className="text-xs font-bold text-gray-200">Click to select image file</span>
-                                            <span className="text-[10px] text-gray-400 mt-1">PNG, JPG, WEBP up to 5MB</span>
+                                    {/* Issuer & Date Grid */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-300 mb-1">
+                                                Issuer / Organization *
+                                            </label>
                                             <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleFileChange}
-                                                className="hidden"
+                                                type="text"
+                                                placeholder="e.g. Coursera, IBM, UOL"
+                                                value={formData.issuer}
+                                                onChange={(e) => setFormData({ ...formData, issuer: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
+                                                required
                                             />
-                                        </label>
-                                    ) : (
-                                        <input
-                                            type="url"
-                                            placeholder="https://example.com/certificate.jpg"
-                                            value={imageUrlInput}
-                                            onChange={handleUrlChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
-                                        />
-                                    )}
-
-                                    {/* Preview */}
-                                    {imagePreview && (
-                                        <div className="relative mt-3 h-32 rounded-xl overflow-hidden border border-brandIndigo/50 bg-black/40 flex items-center justify-center">
-                                            <img
-                                                src={imagePreview}
-                                                alt="Certificate Preview"
-                                                className="h-full object-contain"
-                                            />
-                                            <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 text-[10px] font-bold text-emerald-400 flex items-center gap-1">
-                                                <CheckCircle2 size={12} /> Image Selected
-                                            </span>
                                         </div>
-                                    )}
-                                </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-300 mb-1">
+                                                Issue Date / Period
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="e.g. August 2026"
+                                                value={formData.date}
+                                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
+                                            />
+                                        </div>
+                                    </div>
 
-                                {/* Form Action Buttons */}
-                                <div className="pt-4 flex items-center justify-end gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsAddModalOpen(false)}
-                                        className="px-5 py-2.5 rounded-xl border border-gray-700 text-gray-300 font-bold text-xs hover:bg-white/5 transition-colors cursor-pointer"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brandIndigo to-brandPink text-white font-bold text-xs shadow-lg hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-1.5"
-                                    >
-                                        <Award size={15} />
-                                        Save Certificate
-                                    </button>
-                                </div>
-                            </form>
+                                    {/* Category & Badge */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-300 mb-1">
+                                                Category
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="e.g. Web Dev, AI, Cloud"
+                                                value={formData.category}
+                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-300 mb-1">
+                                                Badge Text
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="e.g. Verified, Top Scorer"
+                                                value={formData.badge}
+                                                onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Description */}
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-300 mb-1">
+                                            Description / Highlights
+                                        </label>
+                                        <textarea
+                                            rows={2}
+                                            placeholder="Brief description of skills or topics covered in this certificate..."
+                                            value={formData.desc}
+                                            onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors resize-none"
+                                        />
+                                    </div>
+
+                                    {/* Image Upload / URL Selector */}
+                                    <div className="space-y-2 pt-2 border-t border-gray-800">
+                                        <div className="flex items-center justify-between">
+                                            <label className="text-xs font-bold text-gray-300">
+                                                Certificate Image *
+                                            </label>
+                                            <div className="flex bg-white/5 p-1 rounded-lg border border-gray-800">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setUploadType("file")}
+                                                    className={`px-3 py-1 rounded-md text-[11px] font-bold transition-colors ${uploadType === "file" ? "bg-brandIndigo text-white" : "text-gray-400 hover:text-white"}`}
+                                                >
+                                                    Upload File
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setUploadType("url")}
+                                                    className={`px-3 py-1 rounded-md text-[11px] font-bold transition-colors ${uploadType === "url" ? "bg-brandIndigo text-white" : "text-gray-400 hover:text-white"}`}
+                                                >
+                                                    Image URL
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {uploadType === "file" ? (
+                                            <label className="border-2 border-dashed border-gray-700 hover:border-brandIndigo rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-white/5 hover:bg-white/10 transition-all text-center group">
+                                                <Upload size={28} className="text-gray-400 group-hover:text-brandIndigo group-hover:scale-110 transition-all mb-2" />
+                                                <span className="text-xs font-bold text-gray-200">Click to select image file</span>
+                                                <span className="text-[10px] text-gray-400 mt-1">PNG, JPG, WEBP up to 5MB</span>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                    className="hidden"
+                                                />
+                                            </label>
+                                        ) : (
+                                            <input
+                                                type="url"
+                                                placeholder="https://example.com/certificate.jpg"
+                                                value={imageUrlInput}
+                                                onChange={handleUrlChange}
+                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo transition-colors"
+                                            />
+                                        )}
+
+                                        {/* Preview */}
+                                        {imagePreview && (
+                                            <div className="relative mt-3 h-32 rounded-xl overflow-hidden border border-brandIndigo/50 bg-black/40 flex items-center justify-center">
+                                                <img
+                                                    src={imagePreview}
+                                                    alt="Certificate Preview"
+                                                    className="h-full object-contain"
+                                                />
+                                                <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                                                    <CheckCircle2 size={12} /> Image Selected
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Form Action Buttons */}
+                                    <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-800/80">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsAddModalOpen(false)}
+                                            className="px-5 py-2.5 rounded-xl border border-gray-700 text-gray-300 font-bold text-xs hover:bg-white/5 transition-colors cursor-pointer"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brandIndigo to-brandPink text-white font-bold text-xs shadow-lg hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-1.5"
+                                        >
+                                            <Award size={15} />
+                                            Save Certificate
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
