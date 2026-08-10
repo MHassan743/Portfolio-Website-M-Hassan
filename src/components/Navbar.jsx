@@ -15,6 +15,7 @@ export default function Navbar() {
         { name: "Skills", href: "#skills" },
         { name: "Experience", href: "#experience" },
         { name: "Projects", href: "#projects" },
+        { name: "Certificates", href: "#certificates" },
         { name: "Services", href: "#services" },
         { name: "Pricing", href: "#pricing" },
         { name: "Education", href: "#education" },
