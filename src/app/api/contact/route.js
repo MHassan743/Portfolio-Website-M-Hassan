@@ -4,13 +4,13 @@ import path from "path";
 
 export async function POST(request) {
     try {
-        const body = await request.json();
-        const { name, email, message } = body;
+        const { name, email, whatsapp, message } = body;
+        const contactInfo = whatsapp || email;
 
         // Direct validations
-        if (!name || !email || !message) {
+        if (!name || !contactInfo || !message) {
             return NextResponse.json(
-                { error: "Validation failure. Name, email, and message are required." },
+                { error: "Validation failure. Name, contact info (WhatsApp/Email), and message are required." },
                 { status: 400 }
             );
         }
@@ -38,7 +38,8 @@ export async function POST(request) {
         const newSubmission = {
             id: Date.now().toString(),
             name,
-            email,
+            email: email || null,
+            whatsapp: whatsapp || null,
             message,
             submittedAt: new Date().toISOString(),
         };

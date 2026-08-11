@@ -19,22 +19,36 @@ export default function Contact() {
         e.preventDefault();
         if (!formData.name || !formData.whatsapp || !formData.message) {
             setStatus("error");
-            setErrorMessage("Please fill out all fields.");
+            setErrorMessage("Please fill out all required fields.");
             return;
         }
 
         setStatus("loading");
+        setErrorMessage("");
 
-        // Format message for WhatsApp
-        const text = `Hello Hassan!%0A%0A*Name:* ${formData.name}%0A*WhatsApp:* ${formData.whatsapp}%0A*Message:* ${formData.message}`;
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=923407542382&text=${text}`;
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
-        // Simulate a small loading delay for UI polish, then redirect
-        setTimeout(() => {
-            window.open(whatsappUrl, "_blank");
-            setStatus("success");
-            setFormData({ name: "", whatsapp: "", message: "" });
-        }, 800);
+            const result = await response.json();
+
+            if (response.ok) {
+                setStatus("success");
+                setFormData({ name: "", whatsapp: "", message: "" });
+            } else {
+                setStatus("error");
+                setErrorMessage(result.error || "Failed to send message. Please try again.");
+            }
+        } catch (err) {
+            console.error("Contact Form Error:", err);
+            setStatus("error");
+            setErrorMessage("Network error. Unable to send message right now.");
+        }
     };
 
     return (
@@ -191,17 +205,17 @@ export default function Contact() {
                                 <button
                                     type="submit"
                                     disabled={status === "loading"}
-                                    className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-brandIndigo to-brandPink shadow-glowIndigo hover:shadow-glowPink disabled:opacity-50 hover:-translate-y-1 transition-all duration-300"
+                                    className="inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-brandIndigo to-brandPink shadow-glowIndigo hover:shadow-glowPink disabled:opacity-50 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                                 >
                                     {status === "loading" ? (
                                         <>
                                             <Loader2 className="animate-spin" size={16} />
-                                            Authenticating...
+                                            Sending Message...
                                         </>
                                     ) : (
                                         <>
                                             <Send size={16} />
-                                            Send via WhatsApp
+                                            Send Message
                                         </>
                                     )}
                                 </button>
@@ -214,10 +228,25 @@ export default function Contact() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
-                                        className="flex gap-2.5 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors mt-6 text-sm font-semibold"
+                                        className="p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 transition-all mt-6 space-y-2"
                                     >
-                                        <CheckCircle className="flex-shrink-0" size={18} />
-                                        Redirecting to WhatsApp!
+                                        <div className="flex items-center gap-2 text-base font-bold text-emerald-400">
+                                            <CheckCircle className="flex-shrink-0" size={20} />
+                                            <span>Message sent!</span>
+                                        </div>
+                                        <p className="text-xs text-emerald-200/90 leading-relaxed font-light">
+                                            Thank you for reaching out. Your message has been received successfully. I will get back to you shortly!
+                                        </p>
+                                        <div className="pt-2 border-t border-emerald-500/20">
+                                            <a
+                                                href="https://wa.me/923407542382"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+                                            >
+                                                <span>Or click here to open WhatsApp directly &rarr;</span>
+                                            </a>
+                                        </div>
                                     </motion.div>
                                 )}
 
@@ -226,7 +255,7 @@ export default function Contact() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
-                                        className="flex gap-2.5 p-4 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 transition-colors mt-6 text-sm font-semibold"
+                                        className="flex items-center gap-2.5 p-4 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-400 transition-colors mt-6 text-sm font-semibold"
                                     >
                                         <AlertCircle className="flex-shrink-0" size={18} />
                                         {errorMessage}
