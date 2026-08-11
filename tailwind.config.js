@@ -11,9 +11,9 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        brandDark: "#0B0F19",
-        brandLight: "#F9FAFB",
-        cardDark: "#151C2C",
+        brandDark: "#0D1120",
+        brandLight: "#F1F5F9",
+        cardDark: "#151D30",
         cardLight: "#FFFFFF",
         brandIndigo: "#6366F1",
         brandPink: "#EC4899",

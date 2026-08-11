@@ -58,10 +58,10 @@ export default function About() {
                         <h3 className="text-2xl font-display font-semibold text-gray-800 dark:text-white leading-snug">
                             Engineering performance-driven, beautifully crafted web applications.
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
+                        <p className="text-gray-600 dark:text-slate-200 leading-relaxed text-base">
                             I am a results-driven Full Stack Developer with hands-on professional experience building robust digital ecosystems. My primary stack revolves around <span className="font-bold text-white">React.js, Next.js, Node.js, Express.js, and MongoDB.</span> I am currently completing my BSCS degree while actively delivering resilient systems.
                         </p>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base">
+                        <p className="text-gray-600 dark:text-slate-200 leading-relaxed text-base">
                             From seamless frontend animations to secure, scalable backend architectures, I bridge the gap between design and deep technical logic with over 5+ live portfolio projects showcasing real-world performance metrics.
                         </p>
 
@@ -104,7 +104,7 @@ export default function About() {
                                     <h4 className="font-display font-semibold text-base mb-1 text-gray-800 dark:text-gray-100 group-hover:text-white transition-colors">
                                         {stat.label}
                                     </h4>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    <p className="text-xs text-gray-400 dark:text-slate-300">
                                         {stat.desc}
                                     </p>
                                 </div>

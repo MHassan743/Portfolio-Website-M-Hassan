@@ -85,7 +85,7 @@ export default function Experience() {
                             </div>
 
                             {/* General details */}
-                            <p className="text-gray-400 leading-relaxed text-sm md:text-base border-t border-gray-800/70 pt-5 font-light relative z-10">
+                            <p className="text-slate-300 leading-relaxed text-sm md:text-base border-t border-gray-800/70 pt-5 font-light relative z-10">
                                 Led the engineering lifecycle of React-based frontends and Node.js REST APIs connected to MongoDB databases for highly interactive client solutions. Architected state-management lifecycles while constantly pushing code through CI/CD Vercel paradigms.
                             </p>
 
@@ -110,7 +110,7 @@ export default function Experience() {
                                                 <p className="text-sm font-bold text-gray-200 leading-snug">
                                                     {item.title}
                                                 </p>
-                                                <p className="text-[11px] text-gray-400 leading-relaxed font-light">
+                                                <p className="text-[11px] text-slate-300 leading-relaxed font-light">
                                                     {item.desc}
                                                 </p>
                                             </div>

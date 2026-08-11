@@ -92,14 +92,14 @@ export default function Hero() {
                     </div>
 
                     {/* Typewriter Subheading */}
-                    <div className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-gray-300 h-10 flex justify-center lg:justify-start items-center">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-slate-300 h-10 flex justify-center lg:justify-start items-center">
                         <Terminal size={24} className="mr-3 text-brandIndigo hidden sm:block" />
                         <span>{words[index].substring(0, subIndex)}</span>
                         <span className={`text-brandPink font-bold ml-1 ${blink ? "opacity-100" : "opacity-0"}`}>|</span>
                     </div>
 
                     {/* Tagline */}
-                    <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 font-sans font-light leading-relaxed">
+                    <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-sans font-light leading-relaxed">
                         I specialize in architecting scalable, production-ready web applications with modern tech stacks. Focused on delivering premium, high-performance UI and resilient backend systems.
                     </p>
 
