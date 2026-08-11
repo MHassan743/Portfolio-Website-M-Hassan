@@ -81,7 +81,7 @@ export default function Navbar() {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-200"
+                            className="p-2 rounded-full bg-white/5 hover:bg-brandIndigo/25 border border-transparent hover:border-brandIndigo/40 backdrop-blur-sm transition-all duration-200"
                             aria-label="Toggle Theme"
                         >
                             {theme === "dark" ? (
@@ -97,7 +97,7 @@ export default function Navbar() {
                         {/* Theme Toggle Mobile */}
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-200"
+                            className="p-2 rounded-full bg-white/5 hover:bg-brandIndigo/25 border border-transparent hover:border-brandIndigo/40 backdrop-blur-sm transition-all duration-200"
                             aria-label="Toggle Theme"
                         >
                             {theme === "dark" ? (
