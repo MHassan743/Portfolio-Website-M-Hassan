@@ -26,28 +26,27 @@ export default function Contact() {
         setStatus("loading");
         setErrorMessage("");
 
+        // Format pre-filled message for WhatsApp
+        const formattedText = `Hello Hassan! 👋%0A%0A*Name:* ${encodeURIComponent(formData.name)}%0A*WhatsApp:* ${encodeURIComponent(formData.whatsapp)}%0A*Message:* ${encodeURIComponent(formData.message)}`;
+        const whatsappUrl = `https://wa.me/923407542382?text=${formattedText}`;
+
         try {
-            const response = await fetch("/api/contact", {
+            // Save submission to API in background
+            fetch("/api/contact", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
-            });
+            }).catch((err) => console.warn("API logging error:", err));
 
-            const result = await response.json();
+            // Open WhatsApp app/web directly with message pre-filled
+            window.open(whatsappUrl, "_blank");
 
-            if (response.ok) {
-                setStatus("success");
-                setFormData({ name: "", whatsapp: "", message: "" });
-            } else {
-                setStatus("error");
-                setErrorMessage(result.error || "Failed to send message. Please try again.");
-            }
+            setStatus("success");
+            setFormData({ name: "", whatsapp: "", message: "" });
         } catch (err) {
-            console.error("Contact Form Error:", err);
+            console.error("WhatsApp Redirect Error:", err);
             setStatus("error");
-            setErrorMessage("Network error. Unable to send message right now.");
+            setErrorMessage("Could not open WhatsApp automatically. Please try again.");
         }
     };
 
@@ -210,12 +209,12 @@ export default function Contact() {
                                     {status === "loading" ? (
                                         <>
                                             <Loader2 className="animate-spin" size={16} />
-                                            Sending Message...
+                                            Opening WhatsApp...
                                         </>
                                     ) : (
                                         <>
                                             <Send size={16} />
-                                            Send Message
+                                            Send via WhatsApp
                                         </>
                                     )}
                                 </button>
@@ -232,10 +231,10 @@ export default function Contact() {
                                     >
                                         <div className="flex items-center gap-2 text-base font-bold text-emerald-400">
                                             <CheckCircle className="flex-shrink-0" size={20} />
-                                            <span>Message sent!</span>
+                                            <span>WhatsApp Opening...</span>
                                         </div>
                                         <p className="text-xs text-emerald-200/90 leading-relaxed font-light">
-                                            Thank you for reaching out. Your message has been received successfully. I will get back to you shortly!
+                                            Your message has been formatted! WhatsApp is opening — please tap <strong className="text-white">&quot;Send&quot;</strong> in WhatsApp to deliver your message directly to Hassan.
                                         </p>
                                         <div className="pt-2 border-t border-emerald-500/20">
                                             <a
@@ -244,7 +243,7 @@ export default function Contact() {
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
                                             >
-                                                <span>Or click here to open WhatsApp directly &rarr;</span>
+                                                <span>Didn&apos;t open automatically? Click here to launch WhatsApp &rarr;</span>
                                             </a>
                                         </div>
                                     </motion.div>
