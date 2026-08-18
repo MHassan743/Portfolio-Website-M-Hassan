@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, Plus, Calendar, ExternalLink, X, Upload, Eye, Trash2, CheckCircle2, Image as ImageIcon } from "lucide-react";
+import { Award, Plus, Calendar, ExternalLink, X, Upload, Eye, Trash2, CheckCircle2, Image as ImageIcon, Lock, Key, ShieldAlert } from "lucide-react";
+
+const SECRET_KEY = "Chicknare43@&$";
 
 const INITIAL_CERTIFICATES = [
     {
@@ -31,8 +33,13 @@ const INITIAL_CERTIFICATES = [
 
 export default function Certificates() {
     const [certificates, setCertificates] = useState(INITIAL_CERTIFICATES);
+    const [isSecretModalOpen, setIsSecretModalOpen] = useState(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [selectedCertificate, setSelectedCertificate] = useState(null);
+
+    // Secret Key State
+    const [secretInput, setSecretInput] = useState("");
+    const [secretError, setSecretError] = useState("");
 
     // Form State
     const [formData, setFormData] = useState({
@@ -69,6 +76,26 @@ export default function Certificates() {
             localStorage.setItem("mhassan_portfolio_certificates", JSON.stringify(updatedCerts));
         } catch (e) {
             console.error("Failed to save certificates to localStorage", e);
+        }
+    };
+
+    // Open Secret Lock Modal for Certificates
+    const handleOpenAddCertificate = () => {
+        setSecretInput("");
+        setSecretError("");
+        setIsSecretModalOpen(true);
+    };
+
+    // Verify Secret Passcode
+    const handleVerifySecretKey = (e) => {
+        e.preventDefault();
+        if (secretInput.trim() === SECRET_KEY) {
+            setIsSecretModalOpen(false);
+            setSecretInput("");
+            setSecretError("");
+            setIsAddModalOpen(true);
+        } else {
+            setSecretError("Incorrect Secret Key! Access denied.");
         }
     };
 
@@ -169,9 +196,9 @@ export default function Certificates() {
                         <div className="w-16 h-1 bg-gradient-to-r from-brandIndigo to-brandPink rounded-full" />
                     </div>
 
-                    {/* Button on the side to add new certificates in future */}
+                    {/* Secret-Key Protected Add Certificate Button */}
                     <button
-                        onClick={() => setIsAddModalOpen(true)}
+                        onClick={handleOpenAddCertificate}
                         className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-brandIndigo to-purple-600 text-white font-bold text-sm shadow-[0_4px_20px_rgba(99,102,241,0.35)] hover:shadow-[0_6px_28px_rgba(99,102,241,0.55)] hover:scale-105 transition-all duration-300 cursor-pointer group self-start md:self-auto"
                     >
                         <Plus size={18} className="group-hover:rotate-90 transition-transform duration-300" />
@@ -324,6 +351,97 @@ export default function Certificates() {
                                 >
                                     Download Image
                                 </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* SECRET KEY LOCK MODAL FOR CERTIFICATES */}
+            <AnimatePresence>
+                {isSecretModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsSecretModalOpen(false)}
+                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative max-w-md w-full glass-panel rounded-3xl border border-brandIndigo/40 bg-[#0c111c] shadow-2xl p-6 sm:p-8 overflow-hidden"
+                        >
+                            {/* Ambient Glow */}
+                            <div className="absolute -top-10 -right-10 w-40 h-40 bg-brandIndigo/20 rounded-full blur-3xl pointer-events-none" />
+
+                            <button
+                                onClick={() => setIsSecretModalOpen(false)}
+                                className="absolute top-5 right-5 p-2 rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                            >
+                                <X size={18} />
+                            </button>
+
+                            <div className="text-center space-y-4">
+                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brandIndigo to-brandPink p-0.5 mx-auto shadow-glowIndigo">
+                                    <div className="w-full h-full rounded-[14px] bg-[#0c111c] flex items-center justify-center text-brandPink">
+                                        <Lock size={28} />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-1">
+                                    <h3 className="text-2xl font-display font-bold text-white">Secret Key Lock</h3>
+                                    <p className="text-xs text-gray-400">Please enter your authorization secret key to add a certificate.</p>
+                                </div>
+
+                                <form onSubmit={handleVerifySecretKey} className="space-y-4 pt-2">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                                            <Key size={16} />
+                                        </div>
+                                        <input
+                                            type="password"
+                                            placeholder="Enter secret passcode..."
+                                            value={secretInput}
+                                            onChange={(e) => {
+                                                setSecretInput(e.target.value);
+                                                setSecretError("");
+                                            }}
+                                            className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all"
+                                            autoFocus
+                                            required
+                                        />
+                                    </div>
+
+                                    {secretError && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold"
+                                        >
+                                            <ShieldAlert size={16} className="shrink-0" />
+                                            <span>{secretError}</span>
+                                        </motion.div>
+                                    )}
+
+                                    <div className="flex items-center justify-end gap-3 pt-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsSecretModalOpen(false)}
+                                            className="px-4 py-2.5 rounded-xl border border-gray-700 text-gray-300 font-bold text-xs hover:bg-white/5 transition-colors cursor-pointer"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brandIndigo to-brandPink text-white font-bold text-xs shadow-lg hover:opacity-90 transition-opacity cursor-pointer"
+                                        >
+                                            Unlock & Proceed
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </motion.div>
                     </motion.div>

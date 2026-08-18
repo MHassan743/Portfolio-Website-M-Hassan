@@ -9,6 +9,7 @@ import {
     SearchCheck,
     Wrench,
     Plug,
+    Smartphone,
 } from "lucide-react";
 
 const services = [
@@ -90,6 +91,17 @@ const services = [
         iconColor: "text-cyan-400",
         iconBg: "bg-cyan-500/10",
         borderHover: "hover:border-cyan-500/40",
+    },
+    {
+        icon: Smartphone,
+        title: "Native Apps",
+        description:
+            "Cross-platform and native mobile application development for Android & iOS with high performance, smooth animations, and native hardware feature integration.",
+        badge: null,
+        glowColor: "bg-indigo-500/20",
+        iconColor: "text-indigo-400",
+        iconBg: "bg-indigo-500/10",
+        borderHover: "hover:border-indigo-500/40",
     },
 ];
 

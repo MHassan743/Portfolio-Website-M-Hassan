@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, ArrowUp } from "lucide-react";
-import { GitHub, LinkedIn } from "@/components/BrandIcons";
+import { GitHub, LinkedIn, Fiverr } from "@/components/BrandIcons";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -71,7 +71,18 @@ export default function Footer() {
                         <LinkedIn size={20} />
                     </a>
                     <a
-                        href="mailto:hj0889297@gmail.com"
+                        href="https://www.fiverr.com/s/L3e3jm4"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 rounded-full text-gray-400 hover:text-[#1DBF73] transition-colors duration-200"
+                        aria-label="Fiverr Profile"
+                    >
+                        <Fiverr size={20} />
+                    </a>
+                    <a
+                        href="https://mail.google.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="p-2.5 rounded-full text-gray-400 hover:text-blue-500 transition-colors duration-200"
                         aria-label="Email Address"
                     >
@@ -83,9 +94,6 @@ export default function Footer() {
                 <div className="text-center space-y-2 border-t border-gray-150 dark:border-gray-800/80 pt-8 w-full">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                         &copy; {currentYear} <span className="font-bold text-gray-700 dark:text-gray-300">M Hassan Asghar</span>. All Rights Reserved.
-                    </p>
-                    <p className="text-[10px] text-gray-450 tracking-wider font-light">
-                        Designed & Built with <span className="text-brandIndigo dark:text-brandPink font-bold">Next.js & Tailwind CSS</span>.
                     </p>
                 </div>
             </div>

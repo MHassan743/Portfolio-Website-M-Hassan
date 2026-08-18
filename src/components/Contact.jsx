@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Mail, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
-import { GitHub, LinkedIn } from "@/components/BrandIcons";
+import { GitHub, LinkedIn, Fiverr } from "@/components/BrandIcons";
 
 export default function Contact() {
     const [formData, setFormData] = useState({ name: "", whatsapp: "", message: "" });
@@ -135,6 +135,15 @@ export default function Contact() {
                                 aria-label="LinkedIn Profile"
                             >
                                 <LinkedIn size={18} />
+                            </a>
+                            <a
+                                href="https://www.fiverr.com/s/L3e3jm4"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-full border border-gray-700 text-gray-400 hover:text-[#1DBF73] hover:border-[#1DBF73] hover:bg-[#1DBF73]/10 transition-all duration-300"
+                                aria-label="Fiverr Profile"
+                            >
+                                <Fiverr size={18} />
                             </a>
                         </div>
                     </div>
