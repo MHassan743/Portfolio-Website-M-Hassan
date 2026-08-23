@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "./ThemeContext";
-import { Sun, Moon, Menu, X, Download } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 export default function Navbar() {
-    const { theme, toggleTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -77,36 +75,10 @@ export default function Navbar() {
                             <Download size={14} />
                             Resume
                         </a>
-
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-full bg-white/5 hover:bg-brandIndigo/25 border border-transparent hover:border-brandIndigo/40 backdrop-blur-sm transition-all duration-200"
-                            aria-label="Toggle Theme"
-                        >
-                            {theme === "dark" ? (
-                                <Sun size={20} className="text-yellow-400" />
-                            ) : (
-                                <Moon size={20} className="text-slate-700" />
-                            )}
-                        </button>
                     </div>
 
                     {/* Mobile Menu Buttons */}
                     <div className="flex md:hidden items-center gap-3">
-                        {/* Theme Toggle Mobile */}
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-full bg-white/5 hover:bg-brandIndigo/25 border border-transparent hover:border-brandIndigo/40 backdrop-blur-sm transition-all duration-200"
-                            aria-label="Toggle Theme"
-                        >
-                            {theme === "dark" ? (
-                                <Sun size={20} className="text-yellow-400" />
-                            ) : (
-                                <Moon size={20} className="text-slate-700" />
-                            )}
-                        </button>
-
                         {/* Hamburger Button */}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
