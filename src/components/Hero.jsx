@@ -142,7 +142,7 @@ export default function Hero() {
                         <div className="font-mono text-sm leading-relaxed text-gray-300">
                             <p><span className="text-brandPink">const</span> <span className="text-brandIndigo">developer</span> = {'{'}</p>
                             <p className="ml-4">name: <span className="text-emerald-400">&quot;M Hassan Asghar&quot;</span>,</p>
-                            <p className="ml-4">experience: <span className="text-amber-400">1 year</span>,</p>
+                            <p className="ml-4">experience: <span className="text-amber-400">2 years</span>,</p>
                             <p className="ml-4">focus: <span className="text-emerald-400">&quot;Full Stack Web App&quot;</span>,</p>
                             <p className="ml-4">skills: [</p>
                             <p className="ml-8"><span className="text-emerald-400">&quot;React.js&quot;</span>, <span className="text-emerald-400">&quot;Next.js&quot;</span>,</p>

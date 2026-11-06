@@ -6,13 +6,13 @@ import { BadgeCheck, Calendar, Cpu, Layers } from "lucide-react";
 export default function About() {
     const stats = [
         {
-            value: "6+",
+            value: "19+",
             label: "Live Projects",
             icon: <Layers className="text-brandIndigo" size={24} />,
             desc: "Deployed & functional on Vercel"
         },
         {
-            value: "1 Year",
+            value: "2 Years",
             label: "Experience",
             icon: <Calendar className="text-brandPink" size={24} />,
             desc: "Active professional coding"
@@ -62,7 +62,7 @@ export default function About() {
                             I am a results-driven Full Stack Developer with hands-on professional experience building robust digital ecosystems. My primary stack revolves around <span className="font-bold text-white">React.js, Next.js, Node.js, Express.js, and MongoDB.</span> I am currently completing my BSCS degree while actively delivering resilient systems.
                         </p>
                         <p className="text-gray-600 dark:text-slate-200 leading-relaxed text-base">
-                            From seamless frontend animations to secure, scalable backend architectures, I bridge the gap between design and deep technical logic with over 5+ live portfolio projects showcasing real-world performance metrics.
+                            From seamless frontend animations to secure, scalable backend architectures, I bridge the gap between design and deep technical logic with over 19+ live portfolio projects showcasing real-world performance metrics.
                         </p>
 
                         <div className="pt-4">

@@ -19,7 +19,7 @@ export default function Experience() {
         },
         {
             title: "Lightspeed Deployments",
-            desc: "Developed, tested and deployed 5+ scalable client portals on Vercel ensuring 95+ performance metrics.",
+            desc: "Developed, tested and deployed 19+ scalable client portals on Vercel ensuring 95+ performance metrics.",
         },
         {
             title: "Modern Core Fundamentals",

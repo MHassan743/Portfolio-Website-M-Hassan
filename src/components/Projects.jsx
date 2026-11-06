@@ -39,7 +39,7 @@ const INITIAL_PROJECTS = [
         id: "proj-1",
         title: "BazarioX",
         subtitle: "Multi-Vendor Marketplace",
-        live: "https://bazariox-store.vercel.app",
+        live: "https://bazariox-marketplace.vercel.app",
         tech: ["React.js", "Node.js", "MongoDB", "Express.js"],
         desc: "Pakistan's multi-vendor e-commerce platform with AI-driven logistics and secure escrow payment system. Features vendor management, neighborhood hubs, and community-driven shopping.",
         featured: false,
@@ -118,6 +118,13 @@ export default function Projects() {
     const [secretInput, setSecretInput] = useState("");
     const [secretError, setSecretError] = useState("");
 
+    // Delete Security Modal State
+    const [projectToDelete, setProjectToDelete] = useState(null);
+    const [deleteSecretInput, setDeleteSecretInput] = useState("");
+    const [deleteSecretError, setDeleteSecretError] = useState("");
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [formValidationError, setFormValidationError] = useState("");
+
     // Form State
     const [formData, setFormData] = useState({
         title: "",
@@ -130,14 +137,21 @@ export default function Projects() {
         theme: "indigo",
     });
 
-    // Load persisted projects on mount
+    // Load persisted projects on mount & auto-migrate BazarioX URL
     useEffect(() => {
         try {
             const saved = localStorage.getItem("mhassan_portfolio_projects");
             if (saved) {
                 const parsed = JSON.parse(saved);
                 if (Array.isArray(parsed) && parsed.length > 0) {
-                    setProjects(parsed);
+                    const migrated = parsed.map((p) => {
+                        if (p.id === "proj-1" || p.title === "BazarioX") {
+                            return { ...p, live: "https://bazariox-marketplace.vercel.app" };
+                        }
+                        return p;
+                    });
+                    setProjects(migrated);
+                    localStorage.setItem("mhassan_portfolio_projects", JSON.stringify(migrated));
                 }
             }
         } catch (e) {
@@ -158,6 +172,7 @@ export default function Projects() {
     const handleOpenAddProject = () => {
         setSecretInput("");
         setSecretError("");
+        setFormValidationError("");
         setIsSecretModalOpen(true);
     };
 
@@ -168,6 +183,7 @@ export default function Projects() {
             setIsSecretModalOpen(false);
             setSecretInput("");
             setSecretError("");
+            setFormValidationError("");
             setIsAddModalOpen(true);
         } else {
             setSecretError("Incorrect Secret Key! Access denied.");
@@ -178,7 +194,7 @@ export default function Projects() {
     const handleAddProjectSubmit = (e) => {
         e.preventDefault();
         if (!formData.title || !formData.subtitle || !formData.live) {
-            alert("Please fill out Title, Subtitle, and Live Demo Link.");
+            setFormValidationError("Please fill out Title, Subtitle, and Live Demo Link.");
             return;
         }
 
@@ -216,16 +232,33 @@ export default function Projects() {
             client: false,
             theme: "indigo",
         });
+        setFormValidationError("");
         setIsAddModalOpen(false);
     };
 
-    // Delete custom project
-    const handleDeleteProject = (id, e) => {
+    // Open Delete Project Security Modal
+    const handleOpenDeleteModal = (project, e) => {
         e.stopPropagation();
-        if (confirm("Are you sure you want to remove this project?")) {
-            const updated = projects.filter((p) => p.id !== id);
+        setProjectToDelete(project);
+        setDeleteSecretInput("");
+        setDeleteSecretError("");
+        setIsDeleteModalOpen(true);
+    };
+
+    // Confirm Delete Project with Security Key
+    const handleConfirmDelete = (e) => {
+        e.preventDefault();
+        if (!projectToDelete) return;
+        if (deleteSecretInput.trim() === SECRET_KEY) {
+            const updated = projects.filter((p) => p.id !== projectToDelete.id);
             setProjects(updated);
             saveToLocalStorage(updated);
+            setIsDeleteModalOpen(false);
+            setProjectToDelete(null);
+            setDeleteSecretInput("");
+            setDeleteSecretError("");
+        } else {
+            setDeleteSecretError("Incorrect Security Key! Unauthorized deletion attempt.");
         }
     };
 
@@ -297,9 +330,9 @@ export default function Projects() {
                                     {/* Delete option for custom projects */}
                                     {!project.isDefault && (
                                         <button
-                                            onClick={(e) => handleDeleteProject(project.id, e)}
-                                            className="absolute top-4 left-4 p-2 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 hover:bg-red-500 hover:text-white transition-all shadow-md z-20"
-                                            title="Delete Project"
+                                            onClick={(e) => handleOpenDeleteModal(project, e)}
+                                            className="absolute top-4 left-4 p-2 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 hover:bg-red-500 hover:text-white transition-all shadow-md z-20 cursor-pointer"
+                                            title="Delete Project (Security Protected)"
                                         >
                                             <Trash2 size={14} />
                                         </button>
@@ -601,6 +634,13 @@ export default function Projects() {
                                         </label>
                                     </div>
 
+                                    {formValidationError && (
+                                        <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold">
+                                            <ShieldAlert size={16} className="shrink-0" />
+                                            <span>{formValidationError}</span>
+                                        </div>
+                                    )}
+
                                     {/* Action Buttons */}
                                     <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-800/80">
                                         <button
@@ -616,6 +656,107 @@ export default function Projects() {
                                         >
                                             <Plus size={15} />
                                             Publish Project
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* DELETE PROJECT SECURITY CONFIRMATION MODAL */}
+            <AnimatePresence>
+                {isDeleteModalOpen && projectToDelete && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsDeleteModalOpen(false)}
+                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 15 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 15 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative max-w-md w-full glass-panel rounded-3xl border border-rose-500/30 bg-[#0c111c] shadow-[0_20px_60px_rgba(244,63,94,0.18)] p-6 sm:p-8 overflow-hidden"
+                        >
+                            {/* Ambient Glow */}
+                            <div className="absolute -top-10 -right-10 w-44 h-44 bg-rose-500/20 rounded-full blur-3xl pointer-events-none" />
+                            <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
+                            <button
+                                onClick={() => setIsDeleteModalOpen(false)}
+                                className="absolute top-5 right-5 p-2 rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                                title="Close"
+                            >
+                                <X size={18} />
+                            </button>
+
+                            <div className="text-center space-y-4">
+                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 p-0.5 mx-auto shadow-[0_0_30px_rgba(244,63,94,0.35)]">
+                                    <div className="w-full h-full rounded-[14px] bg-[#0c111c] flex items-center justify-center text-rose-400">
+                                        <Trash2 size={28} />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-1.5">
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                                        <ShieldAlert size={12} />
+                                        <span>Security Protected</span>
+                                    </div>
+                                    <h3 className="text-2xl font-display font-bold text-white">Delete Project</h3>
+                                    <p className="text-xs text-gray-300 leading-relaxed">
+                                        Are you sure you want to permanently remove <span className="text-white font-bold">&ldquo;{projectToDelete.title}&rdquo;</span>? Enter your secret key to confirm.
+                                    </p>
+                                </div>
+
+                                <form onSubmit={handleConfirmDelete} className="space-y-4 pt-2">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                                            <Key size={16} />
+                                        </div>
+                                        <input
+                                            type="password"
+                                            placeholder="Enter secret passcode..."
+                                            value={deleteSecretInput}
+                                            onChange={(e) => {
+                                                setDeleteSecretInput(e.target.value);
+                                                setDeleteSecretError("");
+                                            }}
+                                            className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-white/5 border border-gray-700/80 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-all"
+                                            autoFocus
+                                            required
+                                        />
+                                    </div>
+
+                                    {deleteSecretError && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="flex items-center gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold text-left"
+                                        >
+                                            <ShieldAlert size={16} className="shrink-0" />
+                                            <span>{deleteSecretError}</span>
+                                        </motion.div>
+                                    )}
+
+                                    <div className="flex items-center justify-end gap-3 pt-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsDeleteModalOpen(false)}
+                                            className="px-4 py-2.5 rounded-xl border border-gray-700 text-gray-300 font-bold text-xs hover:bg-white/5 transition-colors cursor-pointer"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-bold text-xs shadow-[0_4px_20px_rgba(244,63,94,0.35)] hover:shadow-[0_6px_25px_rgba(244,63,94,0.5)] transition-all cursor-pointer flex items-center gap-1.5"
+                                        >
+                                            <Trash2 size={14} />
+                                            <span>Authorize & Delete</span>
                                         </button>
                                     </div>
                                 </form>

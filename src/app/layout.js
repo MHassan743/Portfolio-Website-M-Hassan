@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata = {
   title: "M Hassan Asghar | Full Stack Developer Portfolio",
   description: "Results-driven Full Stack Developer with professional experience building scalable web applications using React, Next.js, Node.js, Express, and MongoDB.",
-  metadataBase: new URL("https://bazariox-store.vercel.app"), // Fallback base URL based on dev's projects
+  metadataBase: new URL("https://bazariox-marketplace.vercel.app"), // Fallback base URL based on dev's projects
   openGraph: {
     title: "M Hassan Asghar | Full Stack Developer Portfolio",
     description: "Results-driven Full Stack Developer with professional experience building scalable web applications using React, Next.js, Node.js, Express, and MongoDB.",
